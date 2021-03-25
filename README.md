@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Battleships | Matthew Cox
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A one sided browser game of battleships, written with React.
 
-## Available Scripts
+## Install and run
 
-In the project directory, you can run:
+```bash
+npm install
+npm run start
+```
+The game should then be accessible at localhost:3000
 
-### `npm start`
+## Test
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+npm run test
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Notes
+#### Code design
+I decided to use React as I have good familiarity with it and it's nice and easy to start an app with create-react-app, which is how this project was initiated.\
+The game is built using two `Classes`, Battlefield, and Boat. Initialisation of the game involves a single Battlefield instance and several Boat instances.\
+Shots are fired by calling a method on the Battlefield instance.
 
-### `npm test`
+I tried to design the code in a way that would make it easy to extend the game further. Changing the size of the grid and increasing the number of boats would be trivial, and making it a two player game shouldn't be too hard either, besides the extended ui it should mean only instantiating a second Battlefield.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+I am not very familiar with TypeScript but I hope I've demonstrated that I at have a basic understanding of it. I've recently begun using it on another project and I'm looking forward to really skilling up with it.
 
-### `npm run build`
+The code is only very lightly commented, my rational being that as it's a simple programme, the code should be easily understood.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### UI design
+I decided not to style the ui beyond a very basic graphical representation of the grid. The brief was to keep it simple and I thought it better to keep my react components as uncluttered as possible. To take the brief literally, which did not mention styling, I imagined a future discussion with the client about the look of the ui.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### Testing
+Some simple tests have been written with Jest and Enzyme
