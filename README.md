@@ -24,7 +24,7 @@ Shots are fired by calling a method on the Battlefield instance.
 
 I tried to design the code in a way that would make it easy to extend the game further. Changing the size of the grid and increasing the number of boats would be trivial, and making it a two player game shouldn't be too hard either, besides the extended ui it should mean only instantiating a second Battlefield and more Boats.
 
-I am not very familiar with TypeScript but I hope I've demonstrated that I at have a basic understanding of it. I've recently begun using it on another project and I'm looking forward to really skilling up with it.
+I am not very familiar with TypeScript but I hope I've demonstrated that I have a basic understanding of it. I've recently begun using it on another project and I'm looking forward to really skilling up with it.
 
 The code is only very lightly commented, my rationale being that as it's a simple programme, the code should be easily understood from context, I hope that's the case!
 
