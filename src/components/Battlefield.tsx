@@ -27,7 +27,7 @@ const Battlefield = (props: types.IBattlefieldComponentProps) => {
             })
         }
         return grid.map(zone => {
-            return <Zone key={zone.name} zone={zone} clickZone={props.onFire} />
+            return <Zone key={zone.name} zone={zone} onFire={props.onFire} />
         })
     }
 

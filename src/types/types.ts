@@ -1,3 +1,5 @@
+
+import Battlefield from '../classes/Battlefield'
 import Boat from '../classes/Boat'
 import React from 'react'
 
@@ -6,22 +8,33 @@ export interface IArenaValues {
     tried: boolean
 }
 
+export type TArena = Map<string, IArenaValues>
+export type TOnFire = (aim: string) => void
+
 export interface IShip {
     type: 'destroyer' | 'battleship'
 }
 
+export interface IGameComponentProps {
+    startAgain(e: React.FormEvent<HTMLButtonElement>): void
+    onFire: TOnFire
+    message: string
+    arena: TArena
+}
+
+export interface IFireForm {
+    onFire: TOnFire
+}
+
 export interface IBattlefieldComponentProps {
-    arena: Map<string, IArenaValues>
-    onFire: any
+    arena: TArena
+    onFire: TOnFire
 }
 
 export interface IZoneComponentProps {
     zone: {
         name: string
-        info: {
-            occupied?: Boat
-            tried: boolean
-        }
+        info: IArenaValues
     }
-    clickZone(e: React.MouseEvent, name: string): void
+    onFire: TOnFire
 }
