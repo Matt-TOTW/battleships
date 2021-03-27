@@ -4,6 +4,7 @@ import * as types from '../types/types'
 import { startNewGame } from '../utils/utils'
 import Battlefield from '../classes/Battlefield'
 import BattlefieldCompononet from './Battlefield'
+import Game from './Game'
 
 const alphabet = new NumberToAlphabet()
 
@@ -29,14 +30,16 @@ const App = () => {
         setArena(new Map(battlefield.getArena))
     }
 
-    const onFire = (e: React.FormEvent<HTMLFormElement>, zoneName = aim) => {
+    const onFire = (e: React.FormEvent<HTMLFormElement>, zone?: string) => {
         e.preventDefault()
+        
+        let zoneName = zone || aim
 
         message && setMessage('')
 
-        const charRegex = /([A-Z])+/ig
-        const numRegex = /([0-9])+/g
         if (aim) { // Then this was a text input, otherwise it was a click on the grid
+            const charRegex = /([A-Z])+/ig
+            const numRegex = /([0-9])+/g
             const chars = zoneName.match(charRegex)!.join()
             const nums = numRegex.test(zoneName) ? zoneName.match(numRegex)!.join() : ''
             zoneName = `${alphabet.stringToNumber(chars.toLowerCase())-1},${parseInt(nums)-1}`
@@ -56,22 +59,16 @@ const App = () => {
     }
 
     return (
-        <div>
-            <h1>BATTLESHIPS</h1>
-            <button onClick={startAgain}>New game</button>
-            <hr /><br />
-            <form onSubmit={onFire}>
-                <input
-                    type="text"
-                    onChange={e => setAim(e.target.value)}
-                    value={aim}
-                    onFocus={e => setMessage(battlefield.getGameOver ? 'The game is over' : '')}
-                />
-                <button>FIRE!</button>
-            </form>
-            <p id="message">{message ? message : 'Enter coordinate (eg B7) or click on the grid'}</p>
-            {arena.size > 0 && <BattlefieldCompononet arena={arena} onFire={onFire} />}
-        </div>
+        <Game
+            startAgain={startAgain}
+            onFire={onFire}
+            setAim={setAim}
+            aim={aim}
+            setMessage={setMessage}
+            battlefield={battlefield}
+            message={message}
+            arena={arena}
+        />
     )
 }
 
