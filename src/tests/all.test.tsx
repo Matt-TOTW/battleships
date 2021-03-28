@@ -54,22 +54,22 @@ test('Build battlefield bit by bit', () => {
     const battlefield = new Battlefield(10)
 
     // Assert setBoat adds boat to battlefield and arena has been updated
-    const boat = new Boat(["0,0", "0,1", "0,2", "0,3"])
+    const boat = new Boat(["0,0", "0,1", "0,2", "0,3"], 'destroyer')
     battlefield.setBoat = boat
     expect(battlefield.getNumberOfBoats).toEqual(1)
-    expect(battlefield.getArena.get("0,0").occupied instanceof Boat).toBe(true)
-    expect(battlefield.getArena.get("0,1").occupied instanceof Boat).toBe(true)
-    expect(battlefield.getArena.get("0,2").occupied instanceof Boat).toBe(true)
-    expect(battlefield.getArena.get("0,3").occupied instanceof Boat).toBe(true)
+    expect(battlefield.getArena.get("0,0")!.occupied instanceof Boat).toBe(true)
+    expect(battlefield.getArena.get("0,1")!.occupied instanceof Boat).toBe(true)
+    expect(battlefield.getArena.get("0,2")!.occupied instanceof Boat).toBe(true)
+    expect(battlefield.getArena.get("0,3")!.occupied instanceof Boat).toBe(true)
 
     // Assert cannot set second boat with a matching coordinate (and that arena was not updated)
-    const boat2 = new Boat(["0,0", "1,0", "2,0", "3,0"])
+    const boat2 = new Boat(["0,0", "1,0", "2,0", "3,0"], 'destroyer')
     battlefield.setBoat = boat2
     expect(battlefield.getNumberOfBoats).toEqual(1)
-    expect(battlefield.getArena.get("0,0").occupied instanceof Boat).toBe(true)
-    expect(battlefield.getArena.get("1,0").occupied).toBeFalsy()
-    expect(battlefield.getArena.get("2,0").occupied).toBeFalsy()
-    expect(battlefield.getArena.get("3,0").occupied).toBeFalsy()
+    expect(battlefield.getArena.get("0,0")!.occupied instanceof Boat).toBe(true)
+    expect(battlefield.getArena.get("1,0")!.occupied).toBeFalsy()
+    expect(battlefield.getArena.get("2,0")!.occupied).toBeFalsy()
+    expect(battlefield.getArena.get("3,0")!.occupied).toBeFalsy()
 })
 
 test('startNewGame() should return Battlefield. Check setBoats', () => {
@@ -80,16 +80,16 @@ test('startNewGame() should return Battlefield. Check setBoats', () => {
 
 test('test fire', () => {
     const battlefield = new Battlefield(10)
-    const boat = new Boat(["0,0", "0,1", "0,2", "0,3"])
+    const boat = new Boat(["0,0", "0,1", "0,2", "0,3"], 'destroyer')
     battlefield.setBoat = boat
     
     battlefield.fire("9,9")
     // Assert arena("9,9") to have tried: true
-    expect(battlefield.getArena.get("9,9").tried).toBe(true)
+    expect(battlefield.getArena.get("9,9")!.tried).toBe(true)
 
     battlefield.fire("0,0")
     // Assert arena has updated and boat has been hit
-    expect(battlefield.getArena.get("0,0").tried).toBe(true)
+    expect(battlefield.getArena.get("0,0")!.tried).toBe(true)
     expect(boat.getHits.length).toEqual(1)
     expect(boat.getHits[0]).toBe("0,0")
 
