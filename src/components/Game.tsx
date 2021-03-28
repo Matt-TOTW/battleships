@@ -3,6 +3,7 @@ import BattlefieldCompononet  from './Battlefield'
 import { IGameComponentProps } from '../types/types'
 import FireForm from './forms/FireForm'
 import {
+    Box,
     Typography,
     Button,
     Theme,
@@ -38,8 +39,8 @@ const Game = (props: IGameComponentProps) => {
             </Button>
             <hr /><br />
             <FireForm onFire={props.onFire} />
-            <Typography variant="body2" id="message">
-                {props.message ? props.message : 'Enter coordinate or click on the grid'}
+            <Typography variant="body2">
+                <span id="message">{props.message ? props.message : 'Enter coordinate or click on the grid'}</span>
             </Typography>
             {props.arena.size > 0 && <BattlefieldCompononet arena={props.arena} onFire={props.onFire} />}
         </Fragment>

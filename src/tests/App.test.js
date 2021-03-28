@@ -73,7 +73,7 @@ test('Build battlefield bit by bit', () => {
 })
 
 test('startNewGame() should return Battlefield. Check setBoats', () => {
-    const battlefield = utils.startNewGame(10, [{type: 'destroyer'}, {type: 'battleship'}])
+    const battlefield = utils.startNewGame(10, [{type: 'destroyer', size: 4}, {type: 'battleship', size: 5}])
     expect(battlefield instanceof Battlefield).toBe(true)
     expect(battlefield.getNumberOfBoats).toEqual(2)
 })
@@ -102,9 +102,10 @@ test('test fire', () => {
 })
 
 test('mount the app and test firing via input', () => {
-    const app = mount(<App />)
+    const app = mount(<App gameStarted={true} />)
     app.find('input').simulate('change', { target: { value: 'A1' } })
     app.find('form').simulate('submit')
     const message = app.find('#message').text()
-    expect(message === 'That\'s a miss' || message === 'That\'s a hit!').toBe(true)
+    console.log('message', message)
+    expect(message === 'That\'s a miss.' || message === 'That\'s a hit!').toBe(true)
 })

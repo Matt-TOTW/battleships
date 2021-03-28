@@ -20,8 +20,8 @@ if (arenaSize > 26 || arenaSize < 5) throw new Error('The arena size must at lea
 
 let battlefield: Battlefield
 
-const App = () => {
-    const [gameStarted, setGameStarted] = useState(false)
+const App = (props: {gameStarted?: boolean}) => { // props used for mounting app in tests
+    const [gameStarted, setGameStarted] = useState(props.gameStarted ? true : false)
     const [arena, setArena] = useState(new Map())
     const [message, setMessage] = useState('')
     useEffect(() => {
