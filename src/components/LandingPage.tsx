@@ -1,3 +1,5 @@
+import { LandingPageProps } from '../types/types'
+
 import {
     Typography,
     Button,
@@ -5,11 +7,6 @@ import {
     Theme,
     makeStyles
 } from '@material-ui/core'
-
-interface LandingPageProps {
-    gameStarted: boolean
-    start(e: React.FormEvent<HTMLButtonElement>): void
-}
 
 const styles = makeStyles<Theme>(theme => {
     return {

@@ -58,3 +58,8 @@ export interface IShotResponse {
     type: shotResponse
     boatType?: string
 }
+
+export interface LandingPageProps {
+    gameStarted: boolean
+    start(e: React.FormEvent<HTMLButtonElement>): void
+}
