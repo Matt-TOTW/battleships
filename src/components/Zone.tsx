@@ -1,7 +1,24 @@
 import React from 'react'
-import * as types from '../types/types'
+import { IZoneComponentProps } from '../types/types'
+import Shot from './Shot'
+import {
+    Grid,
+    Theme,
+    makeStyles,
+} from '@material-ui/core'
 
-const Zone = (props: types.IZoneComponentProps) => {
+const styles = makeStyles<Theme>(theme => {
+    return {
+        boxStyle: {
+            border: `solid ${theme.palette.text.primary} 1px`,
+            height: '100%',
+            cursor: 'pointer'
+        }
+    }
+})
+
+const Zone = (props: IZoneComponentProps) => {
+    const classes = styles()
     const zone = props.zone
 
     const onHandleClick = (e: React.MouseEvent) => {
@@ -9,12 +26,14 @@ const Zone = (props: types.IZoneComponentProps) => {
     }
 
     return (
-        <div
+        <Grid container
             onClick={onHandleClick}
-            style={{border: 'solid black 1px', cursor: 'pointer'}}
+            className={classes.boxStyle}
+            justify={'center'}
+            alignItems={'center'}
         >
-            {zone.info.tried && <p style={{textAlign: 'center'}}>{zone.info.occupied ? <span style={{color: 'red'}}>HIT!</span> : 'Miss'}</p>}
-        </div>
+            {zone.info.tried && <Shot hit={!!zone.info.occupied} />}
+        </Grid>
     )
 }
 

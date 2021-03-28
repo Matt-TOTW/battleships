@@ -1,22 +1,51 @@
 import { Fragment } from 'react'
-import { NumberToAlphabet } from 'number-to-alphabet'
 import * as types from '../types/types'
+import { numberToString } from '../utils/utils'
 import Zone from './Zone'
-const alphabet = new NumberToAlphabet()
+import {
+    Box,
+    Theme,
+    makeStyles
+} from '@material-ui/core'
+
+interface StylesProps {
+    arena: types.TArena
+}
+const styles = makeStyles<Theme, StylesProps>(theme => {
+    return {
+        gridStyle: props => ({
+            display: "flex",
+            width: `${Math.sqrt(props.arena.size)*(theme.grid.boxSize + theme.grid.spacing)}px`,
+            height: `${Math.sqrt(props.arena.size)*(theme.grid.boxSize + theme.grid.spacing)}px`,
+            flexDirection: "column",
+            flexWrap: "wrap"
+        }),
+        gridItemStyle: {
+            width: theme.grid.boxSize,
+            height: theme.grid.boxSize,
+            display: 'flex',
+            marginRight: theme.grid.spacing,
+            marginBottom: theme.grid.spacing,
+            justifyContent: 'center',
+            alignItems: 'center'
+        },
+        gridColumnHeaderStyle: props => ({
+            display: "flex",
+            width: `${Math.sqrt(props.arena.size)*(theme.grid.boxSize + theme.grid.spacing)}px`,
+            height: `${theme.grid.boxSize}px`,
+            marginLeft: `${theme.grid.boxSize}px`
+        }),
+        gridRowHeaderStyle: props => ({
+            display: "flex",
+            flexDirection: "column",
+            width: `${theme.grid.boxSize}px`,
+            height: `${Math.sqrt(props.arena.size)*(theme.grid.boxSize + theme.grid.spacing)}px`
+        })
+    }    
+})
 
 const Battlefield = (props: types.IBattlefieldComponentProps) => {
-    const unitSize = '50px'
-    const gridTemplateArray = []
-    for (let i = 0; i < Math.sqrt(props.arena.size); i++) {
-        gridTemplateArray.push(unitSize)
-    }
-    const divStyle = {
-        display: 'grid',
-        gridTemplateColumns: `${gridTemplateArray.join(' ')}`,
-        gridTemplateRows: `${gridTemplateArray.join(' ')}`,
-        gridAutoFlow: 'column',
-        gap: '5px'
-    }
+    const classes = styles(props)
 
     const renderArena = () => {
         const grid = []
@@ -27,18 +56,25 @@ const Battlefield = (props: types.IBattlefieldComponentProps) => {
             })
         }
         return grid.map(zone => {
-            return <Zone key={zone.name} zone={zone} onFire={props.onFire} />
+            return (
+                <Box key={zone.name} className={classes.gridItemStyle}>
+                    <Zone key={zone.name} zone={zone} onFire={props.onFire} />
+                </Box>
+            )
         })
     }
 
     const renderColumnHeader = () => {
         const arr = []
         for (let i = 0; i < Math.sqrt(props.arena.size); i++) {
-            arr.push(i+1)
+            arr.push(i)
         }
         return arr.map(elem => {
             return (
-                <div key={elem}>{alphabet.numberToString(elem).toUpperCase()}</div>
+                <Box key={elem} className={classes.gridItemStyle}>
+                    {/* {alphabet.numberToString(elem).toUpperCase()} */}
+                    {numberToString[elem]}
+                </Box>
             )
         })
     }
@@ -49,38 +85,26 @@ const Battlefield = (props: types.IBattlefieldComponentProps) => {
         }
         return arr.map(elem => {
             return (
-                <div key={elem}>{elem}</div>
+                <Box key={elem} className={classes.gridItemStyle}>
+                    {elem}
+                </Box>
             )
         })
     }
 
     return (
         <Fragment>
-            <div
-                style={{
-                    marginLeft: '35px',
-                    display: 'grid',
-                    gridTemplateColumns: `${gridTemplateArray.join(' ')}`,
-                    gap: '5px'
-                }}
-            >
+            <Box className={classes.gridColumnHeaderStyle}>
                 {renderColumnHeader()}
-            </div>
-            <div style={{display: 'flex'}}>
-                <div
-                    style={{
-                        marginTop: '15px',
-                        display: 'grid',
-                        gridTemplateRows: `${gridTemplateArray.join(' ')}`,
-                        gap: '5px'
-                    }}
-                >
+            </Box>
+            <Box display="flex">
+                <Box className={classes.gridRowHeaderStyle}>
                     {renderRowHeader()}
-                </div>
-                <div style={divStyle}>
+                </Box>
+                <Box className={classes.gridStyle}>
                     {renderArena()}
-                </div>
-            </div>
+                </Box>
+            </Box>
         </Fragment>
     )
 }

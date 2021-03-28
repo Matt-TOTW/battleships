@@ -1,17 +1,48 @@
+import { Fragment } from 'react'
 import BattlefieldCompononet  from './Battlefield'
 import { IGameComponentProps } from '../types/types'
 import FireForm from './forms/FireForm'
+import {
+    Typography,
+    Button,
+    Theme,
+    makeStyles
+} from '@material-ui/core'
+
+const styles = makeStyles<Theme>(theme => {
+    return {
+        button: {
+            marginBottom: '1rem'
+        }
+    }
+})
 
 const Game = (props: IGameComponentProps) => {
+    const classes = styles()
+
     return (
-        <div>
-            <h1>BATTLESHIPS</h1>
-            <button onClick={props.startAgain}>New game</button>
+        <Fragment>
+            <Typography variant="h2">
+                BATTLESHIPS
+            </Typography>
+            <Button
+                variant="contained"
+                color="secondary"
+                onClick={props.startAgain}
+                disableElevation
+                classes={{
+                    root: classes.button
+                }}
+            >
+                New game
+            </Button>
             <hr /><br />
             <FireForm onFire={props.onFire} />
-            <p id="message">{props.message ? props.message : 'Enter coordinate (eg B7) or click on the grid'}</p>
+            <Typography variant="body2" id="message">
+                {props.message ? props.message : 'Enter coordinate or click on the grid'}
+            </Typography>
             {props.arena.size > 0 && <BattlefieldCompononet arena={props.arena} onFire={props.onFire} />}
-        </div>
+        </Fragment>
     )
 }
 

@@ -1,14 +1,16 @@
+import { TBoatTypes } from '../types/types'
+
 class Boat {
     public placement: string[]
     readonly size: number
-    readonly type: 'destroyer' | 'battleship'
+    readonly type: TBoatTypes
     private hits: string[]
     private sunk: boolean
 
-    constructor(placement: string[]) {
+    constructor(placement: string[], type: TBoatTypes) {
         this.placement = placement
         this.size = placement.length
-        this.type = placement.length === 4 ? 'destroyer' : 'battleship'
+        this.type = type
         this.hits = []
         this.sunk = false
     }

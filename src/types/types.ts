@@ -1,5 +1,4 @@
 
-import Battlefield from '../classes/Battlefield'
 import Boat from '../classes/Boat'
 import React from 'react'
 
@@ -10,9 +9,11 @@ export interface IArenaValues {
 
 export type TArena = Map<string, IArenaValues>
 export type TOnFire = (aim: string) => void
+export type TBoatTypes = 'destroyer' | 'battleship' | 'frigate'
 
 export interface IShip {
-    type: 'destroyer' | 'battleship'
+    type: TBoatTypes,
+    size: number
 }
 
 export interface IGameComponentProps {
@@ -37,4 +38,23 @@ export interface IZoneComponentProps {
         info: IArenaValues
     }
     onFire: TOnFire
+}
+
+export interface IShotsComponentProps {
+    hit: boolean
+}
+
+export enum shotResponse {
+    gameOver = 'gameOver',
+    notFound = 'notFound',
+    alreadyTried = 'alreadyTried',
+    miss = 'miss',
+    hit = 'hit',
+    sunk = 'sunk',
+    sunkAndGameOver = 'sunkAndGameOver'
+}
+
+export interface IShotResponse {
+    type: shotResponse
+    boatType?: string
 }

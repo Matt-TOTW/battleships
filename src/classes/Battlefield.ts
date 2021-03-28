@@ -1,4 +1,4 @@
-import * as types from '../types/types'
+ import * as types from '../types/types'
 import Boat from './Boat'
 
 class Battlefield {
@@ -54,12 +54,13 @@ class Battlefield {
 
     fire = (aim: string) => {
         const zone = this.arena.get(aim)
-        if (this.gameOver) return `The game is over`
-        if (!zone) return `Couldn't find that square, please make sure you enter in the format A1.`
-        if (zone.tried) return `You've already tried there`
+        let result: types.IShotResponse
+        if (this.gameOver) return result = { type: types.shotResponse.gameOver }
+        if (!zone) return result = { type: types.shotResponse.notFound }
+        if (zone.tried) return result = { type: types.shotResponse.alreadyTried }
         if (!zone.occupied) {
             this.arena.set(aim, {tried: true})
-            return `That's a miss`
+            return result = { type: types.shotResponse.miss }
         } else {
             const boat = zone.occupied
             boat.hit = aim
@@ -72,9 +73,9 @@ class Battlefield {
                 }
             }
             this.gameOver = !gameOn
-            if (this.gameOver) return `That's a hit! You've sunk a ${boat.type} and that's all of 'em. You win!`
-            if (boat.getSunk) return `That's a hit! You've sunk a ${boat.type}.`
-            return `That's a hit!`
+            if (this.gameOver) return result = { type: types.shotResponse.sunkAndGameOver, boatType: boat.type }
+            if (boat.getSunk) return result = { type: types.shotResponse.sunk, boatType: boat.type }
+            return result = { type: types.shotResponse.hit }
         }
     }
 
